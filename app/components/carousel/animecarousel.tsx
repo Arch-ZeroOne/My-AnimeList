@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 type AnimeInfo = {
   title: string;
   picture_url: string;
   rank: number;
 };
 const AnimeCarousel = async () => {
+  const [rank, setRank] = useState();
   const response = await fetch(
     "https://myanimelist.p.rapidapi.com/anime/top/all?p=1",
     {
@@ -19,39 +20,34 @@ const AnimeCarousel = async () => {
   if (!response.ok) {
     throw new Error("Failure in fetching data");
   }
-  const anime = await response.json();
+  const result = await response.json();
+  const anime = result.slice(0, 10);
   return (
-    <div className="flex flex-col items-center">
-      <div className="carousel w-[80%]">
-        {anime.map((data: AnimeInfo) => (
-          <div
-            id={String(data.rank)}
-            className="carousel-item w-full"
-            key={data.rank}
-          >
-            <div className="card lg:card-side bg-indigo-600 shadow-sm w-full">
-              <figure>
-                <img src={data.picture_url} className="w-full" alt="Album" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">{data.title}</h2>
-                <p>{data.rank}</p>
-                <div className="card-actions justify-end">
-                  <button className="btn btn-primary">See Info</button>
-                </div>
-              </div>
-            </div>
+    <div className="carousel w-md">
+      {anime.map((data: AnimeInfo) => (
+        <div id={String(data.rank)} className="carousel-item relative w-full">
+          <img src={data.picture_url} className="w-full" />
+          <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+            <a href={`#${10}`} className="btn btn-circle">
+              ❮
+            </a>
+            <a
+              onClick={}
+              href={`#${data.rank + 1}`}
+              className="btn btn-circle"
+            >
+              ❯
+            </a>
+            {}
           </div>
-        ))}
-      </div>
-      <div className="flex w-full justify-center gap-2 py-2">
-        {anime.map((data: AnimeInfo) => (
-          <a href={String(`#${data.rank}`)} className="btn btn-xs">
-            {data.rank}
-          </a>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
+    // <div className="flex flex-col items-center">
+    //   <div className="carousel w-[80%]">
+    //
+    //   </div>
+    // </div>
   );
 };
 
