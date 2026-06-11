@@ -1,6 +1,5 @@
 "use client";
-import React from "react";
-
+import ThemeController from "../themcontroller/ThemeController";
 const AnimeLayout = () => {
   return (
     <div>
@@ -31,7 +30,7 @@ const AnimeLayout = () => {
                 />
               </svg>
             </label>
-            <button className="btn btn-ghost text-xl">daisyUI</button>
+            <button className="btn btn-ghost text-xl">AnimeList</button>
           </div>
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">
@@ -48,11 +47,7 @@ const AnimeLayout = () => {
             </ul>
           </div>
           <div className="navbar-end">
-            <input
-              type="text"
-              placeholder="Search"
-              className="input input-bordered w-64 lg:w-auto"
-            />
+            <ThemeController />
           </div>
         </div>
 
